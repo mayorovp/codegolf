@@ -1,10 +1,10 @@
 var $ = require("jquery/src/core")
 require("jquery/src/ajax")
+require("jquery/src/ajax/xhr")
 require("jquery/src/css")
 require("jquery/src/attributes")
-
-require("html!./table.html")
-require("style!css!./table.css")
+require("jquery/src/manipulation")
+require("jquery/src/core/parseHTML")
 
 function getAnswers(questionId, answer_filter, page) {
     return $.get('//api.stackexchange.com/2.2/questions/' + questionId + '/answers?page=' + page + '&pagesize=100&order=desc&sort=activity&site=ru.stackoverflow&filter=' + answer_filter)
@@ -49,6 +49,7 @@ function process(items) {
 }
 
 function fillTemplate(sortedItems) {
+    require("style!css!./table.css")
     $(document.body).html(require("html!./table.html"))
 
     $('#leadership').append(sortedItems.map((item, index) =>
@@ -63,11 +64,14 @@ function fillTemplate(sortedItems) {
     ));
 }
 
-var QUESTION_ID = Number.parseInt(/\/questions\/(.d+)\//.exec(top.location.href.match())[0], 10),
-    ANSWER_FILTER = "!4*SyY(4Kifo3Mz*lT",
-    startPage = 1;
+function execute(QUESTION_ID) {
+    var ANSWER_FILTER = "!4*SyY(4Kifo3Mz*lT",
+        startPage = 1;
 
-getAnswers(QUESTION_ID, ANSWER_FILTER, startPage)
-    .then(process)
-    .then(r => r.sort((a, b) => typeof a.length !== 'number' ? 1 : a.length - b.length))
-    .then(fillTemplate);
+    getAnswers(QUESTION_ID, ANSWER_FILTER, startPage)
+        .then(process)
+        .then(r => r.sort((a, b) => typeof a.length !== 'number' ? 1 : a.length - b.length))
+        .then(fillTemplate);
+}
+
+window.execute = execute;
