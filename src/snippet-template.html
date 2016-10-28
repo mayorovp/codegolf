@@ -1,0 +1,12 @@
+<!-- begin snippet: js hide: true console: false babel: false -->
+
+<!-- language: lang-html -->
+
+    <script src="${url}"></script>
+    ${require("raw!html-minify!./cssload.html").split("\n").join("    \n")}
+
+<!-- language: lang-css -->
+
+    ${require("css?minimize!./cssload.css").toString().split("\n").join("    \n")}
+
+<!-- end snippet -->

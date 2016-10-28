@@ -22,7 +22,7 @@ var options = {
     output: {
         filename: "[hash].js",
         path: "./package",
-        publicPath: "http://mayorovp.github.io/codegolf/",
+        publicPath: "https://mayorovp.github.io/codegolf/",
     },
     plugins: [
       //new webpack.optimize.UglifyJsPlugin({minimize: true})
@@ -41,15 +41,19 @@ var options = {
 };
 
 compile(options).then(s1 => {
-    options.entry = "./src/readme-template.js";
-    options.output.filename = "_readme-template.js";
+    options.entry = "html?interpolate!./src/index-template.html";
+    options.output.filename = "_index-template.js";
 
     console.log("");
     return compile(options).then(s2 => {
         var fs = require("fs");
 
-        var code = fs.readFileSync(options.output.path + "/" + s2.assetsByChunkName.main);
-        var content = require("vm").runInNewContext(code)(options.output.publicPath + s1.assetsByChunkName.main);
-        fs.writeFileSync(options.output.path + "/README.md", content);
+        try {
+            var code = fs.readFileSync(options.output.path + "/" + s2.assetsByChunkName.main);
+            var content = require("vm").runInNewContext(`url => ${code}`)(options.output.publicPath + s1.assetsByChunkName.main);
+            fs.writeFileSync(options.output.path + "/index.html", content);
+        } catch (ex) {
+            console.error(ex);
+        }
     })
 })
