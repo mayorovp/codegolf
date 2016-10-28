@@ -1,0 +1,12 @@
+#leadership {
+    border-collapse: collapse;
+}
+
+    #leadership td,
+    #leadership th {
+        padding: 5px;
+    }
+
+    #leadership th {
+        text-align: center;
+    }
