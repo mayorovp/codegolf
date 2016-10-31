@@ -1,21 +1,20 @@
 <title>CodeGolf leaderboard snippet template</title>
 
-<pre>
-&lt;!-- begin snippet: js hide: true console: true babel: false --&gt;
+<style>
+  textarea, iframe { 
+    display: block;
+    border: dotted black 1px;
+    width: 100%;
+    height: 200px;
+  }
+</style>
 
-&lt;!-- language: lang-html --&gt;
+<input type=text id=question-url style="width: 100%" placeholder="URL вопроса">
 
-    &lt;script src="https://mayorovp.github.io/codegolf/97314479fcd24a2386e1.js"&gt;&lt;/script&gt;
-    &lt;div class=cssload-container&gt;&lt;div class=cssload-cube&gt;&lt;div class=cssload-half1&gt;&lt;div class="cssload-side cssload-s1"&gt;&lt;/div&gt;&lt;div class="cssload-side cssload-s2"&gt;&lt;/div&gt;&lt;div class="cssload-side cssload-s5"&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=cssload-half2&gt;&lt;div class="cssload-side cssload-s3"&gt;&lt;/div&gt;&lt;div class="cssload-side cssload-s4"&gt;&lt;/div&gt;&lt;div class="cssload-side cssload-s6"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+<textarea id=snippet-text></textarea>
 
-&lt;!-- language: lang-css --&gt;
+<h2>Результат работы</h2>
+<iframe src="blank.html" id=snippet-execute></iframe>
 
-    .cssload-container,.cssload-cube{width:97px;height:97px;transform-style:preserve-3d}.cssload-container,.cssload-cube,.cssload-half1,.cssload-half2{transform-style:preserve-3d}.cssload-container{position:relative;margin:23px 84px;perspective:292px}.cssload-cube{animation:cube 11.5s forwards infinite;transform-origin:center 49px}.cssload-half1,.cssload-s1{top:0;transform-origin:50% 100%}.cssload-half1{height:39px;position:absolute;animation:half-fold 11.5s forwards infinite}.cssload-side{width:19px;height:19px;background:#ddd;position:absolute}.cssload-s1{left:39px;animation:s1ani 11.5s forwards infinite}.cssload-s2,.cssload-s3,.cssload-s4{left:39px;transform-origin:50% 0}.cssload-s2{top:19px;animation:s2ani 11.5s forwards infinite}.cssload-s3{top:39px;animation:s3ani 11.5s forwards infinite}.cssload-s4{top:58px;animation:s4ani 11.5s forwards infinite}.cssload-s5{left:19px;top:19px;transform-origin:100% 50%;animation:s5ani 11.5s forwards infinite}.cssload-s6{left:58px;top:39px;transform-origin:0 50%;animation:s6ani 11.5s forwards infinite}@keyframes cube{0%,30%{transform:rotateX(0)}40%{transform:rotateX(45deg) rotateY(0) rotate(45deg)}60%{transform:rotateX(60deg) rotateY(0) rotate(45deg)}65%,70%{transform:rotateX(60deg) rotate(45deg) rotate(180deg)}75%,80%{transform:rotateX(60deg) rotate(45deg) rotate(1turn)}90%{transform:rotateX(0) rotate(0) rotate(0)}}@keyframes s1ani{0%{opacity:1;transform:translateY(0);background:#ddd}40%{transform:rotateX(0);background:#ddd}50%{transform:rotateX(-90deg);background:#ddd}90%{transform:rotateX(-90deg)}}@keyframes s2ani{0%{opacity:0;transform:rotateX(-179deg)}10%{opacity:1;transform:rotateX(0)}40%{background:#ddd}45%,80%{background:#b4b4b4}65%{opacity:1;background:#b4b4b4}90%{opacity:1}to{opacity:0}}@keyframes s3ani{0%,10%{opacity:0;transform:rotateX(-179deg)}20%,90%{opacity:1;transform:rotateX(0)}40%{background:#ddd}45%{background:#969696}to{opacity:0}}@keyframes s4ani{0%,20%{opacity:0;transform:rotateX(-179deg)}10%,to{opacity:0}30%{opacity:1;transform:rotateX(0)}40%{transform:rotateX(0);background:#ddd}50%{transform:rotateX(90deg);background:#b4b4b4}80%{background:#b4b4b4}90%{opacity:1;transform:rotateX(90deg)}}@keyframes s5ani{0%,10%{opacity:0;transform:rotateY(-179deg)}20%{opacity:1;background:#ddd;transform:rotateY(0)}40%{transform:rotateY(0)}50%{transform:rotateY(90deg)}55%{background:#ddd}60%{background:#c8c8c8}90%{transform:rotateY(90deg);opacity:1}to{opacity:0}}@keyframes s6ani{0%,20%{opacity:0;transform:rotateY(179deg)}30%{opacity:1;transform:rotateY(0)}40%{transform:rotateY(0)}50%{transform:rotateY(-90deg);background:#ddd}60%,80%{background:#c8c8c8}90%{opacity:1;transform:rotateY(-90deg)}to{opacity:0}}@keyframes half-fold{0%,50%{transform:rotateX(0)}60%,90%{transform:rotateX(-90deg)}}
-
-&lt;!-- language: lang-js --&gt;
-
-    execute({{QUESTION_ID}});
-
-&lt;!-- end snippet --&gt;
-
-</pre>
+<script>var assetsByChunkName = {"execute":{"localPath":"execute-3ef43a749e7fd9354a82.js","publicPath":"https://mayorovp.github.io/codegolf/execute-3ef43a749e7fd9354a82.js"},"index_template":{"localPath":"index_template-7980004704ec894a1d84.js","publicPath":"https://mayorovp.github.io/codegolf/index_template-7980004704ec894a1d84.js"},"table":{"localPath":"table-98fff6c7cd5f0c4b158d.js","publicPath":"https://mayorovp.github.io/codegolf/table-98fff6c7cd5f0c4b158d.js"}}</script>
+<script src="execute-3ef43a749e7fd9354a82.js"></script>
