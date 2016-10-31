@@ -15,6 +15,9 @@
   "bugs": {
     "url": "https://github.com/mayorovp/codegolf/issues"
   },
+  "scripts": {
+    "start": "webpack-dev-server --content-base package/"
+  },
   "devDependencies": {
     "babel-core": "^6.18.0",
     "babel-loader": "^6.2.7",
@@ -27,7 +30,8 @@
     "html-minify-loader": "^1.1.0",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
   },
   "babel": {
     "presets": [
