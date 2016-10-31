@@ -7,7 +7,7 @@ require("jquery/src/manipulation")
 require("jquery/src/core/parseHTML")
 
 function getAnswers(questionId, answer_filter, page) {
-    return $.get('//api.stackexchange.com/2.2/questions/' + questionId + '/answers?page=' + page + '&pagesize=100&order=desc&sort=activity&site=ru.stackoverflow&filter=' + answer_filter)
+    return $.get(`//api.stackexchange.com/2.2/questions/${questionId}/answers?page=${page}&pagesize=100&order=desc&sort=activity&site=ru.stackoverflow&filter=${answer_filter}`)
         .then(data => data.has_more
             ? getAnswers(questionId, answer_filter, page + 1).then(d => data.items.concat(d))
             : data.items
@@ -71,7 +71,8 @@ function execute(QUESTION_ID) {
     getAnswers(QUESTION_ID, ANSWER_FILTER, startPage)
         .then(process)
         .then(r => r.sort((a, b) => typeof a.length !== 'number' ? 1 : a.length - b.length))
-        .then(fillTemplate);
+        .then(fillTemplate)
+        .catch(err=>console.error('Error:',err));
 }
 
 window.execute = execute;
