@@ -2,7 +2,7 @@
 
 <!-- language: lang-html -->
 
-    <script src="${url}"></script>
+    <script src="${require('assetsByChunkName').execute.publicPath}"></script>
     ${require("raw!html-minify!./cssload.html").split("\n").join("    \n")}
 
 <!-- language: lang-css -->

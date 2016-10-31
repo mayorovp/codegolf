@@ -18,14 +18,21 @@ var compile = opt => new Promise((resolve, reject) => webpack(opt, (err, stats) 
 }));
 
 var options = {
-    entry: "./src/table.js",
+    entry: {
+        table: "./src/table.js",
+        execute: "./src/snippet-execute.js",
+        index_template: "html?interpolate!./src/index-template.html",
+    },
     output: {
-        filename: "[hash].js",
+        filename: "[name]-[chunkhash].js",
         path: "./package",
         publicPath: "https://mayorovp.github.io/codegolf/",
     },
     plugins: [
       //new webpack.optimize.UglifyJsPlugin({minimize: true})
+      new require('copy-webpack-plugin')([
+          { from: 'static' },
+      ]),
     ],
     module: {
         loaders: [
@@ -37,23 +44,29 @@ var options = {
               },
           },
         ],
-    }
+    },
+    externals: {
+        'assetsByChunkName': 'assetsByChunkName',
+    },
 };
 
 compile(options).then(s1 => {
-    options.entry = "html?interpolate!./src/index-template.html";
-    options.output.filename = "_index-template.js";
+    var assetsByChunkName = {};
+    for (var k in s1.assetsByChunkName)
+        if (s1.assetsByChunkName.hasOwnProperty(k))
+            assetsByChunkName[k] = {
+                localPath: s1.assetsByChunkName[k],
+                publicPath: options.output.publicPath + s1.assetsByChunkName[k],
+            };
 
-    console.log("");
-    return compile(options).then(s2 => {
-        var fs = require("fs");
+    var fs = require("fs");
 
-        try {
-            var code = fs.readFileSync(options.output.path + "/" + s2.assetsByChunkName.main);
-            var content = require("vm").runInNewContext(`url => ${code}`)(options.output.publicPath + s1.assetsByChunkName.main);
-            fs.writeFileSync(options.output.path + "/index.html", content);
-        } catch (ex) {
-            console.error(ex);
-        }
-    })
+    try {
+        var code = fs.readFileSync(options.output.path + "/" + s1.assetsByChunkName.index_template);
+        var content = require("vm").runInNewContext(`assetsByChunkName => ${code}`)(assetsByChunkName);
+        fs.writeFileSync(options.output.path + "/index.html", content);
+    } catch (ex) {
+        console.error(ex);
+    }
 })
+
