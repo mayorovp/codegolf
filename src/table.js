@@ -6,10 +6,10 @@ require("jquery/src/attributes")
 require("jquery/src/manipulation")
 require("jquery/src/core/parseHTML")
 
-function getAnswers(questionId, answer_filter, page) {
-    return $.get(`//api.stackexchange.com/2.2/questions/${questionId}/answers?page=${page}&pagesize=100&order=desc&sort=activity&site=ru.stackoverflow&filter=${answer_filter}`)
+function getAnswers(siteId, questionId, answer_filter, page) {
+    return $.get(`//api.stackexchange.com/2.2/questions/${questionId}/answers?page=${page}&pagesize=100&order=desc&sort=activity&site=${siteId}&filter=${answer_filter}`)
         .then(data => data.has_more
-            ? getAnswers(questionId, answer_filter, page + 1).then(d => data.items.concat(d))
+            ? getAnswers(siteId, questionId, answer_filter, page + 1).then(d => data.items.concat(d))
             : data.items
         );
 }
@@ -64,15 +64,17 @@ function fillTemplate(sortedItems) {
     ));
 }
 
-function execute(QUESTION_ID) {
+function execute(SITE_ID, QUESTION_ID) {
     var ANSWER_FILTER = "!4*SyY(4Kifo3Mz*lT",
         startPage = 1;
 
-    getAnswers(QUESTION_ID, ANSWER_FILTER, startPage)
+    var q = getAnswers(SITE_ID, QUESTION_ID, ANSWER_FILTER, startPage)
         .then(process)
         .then(r => r.sort((a, b) => typeof a.length !== 'number' ? 1 : a.length - b.length))
-        .then(fillTemplate)
-        .catch(err=>console.error('Error:',err));
+        .then(fillTemplate);
+
+    q.catch(err => console.error('Error:',err));
+    return q;
 }
 
 window.execute = execute;

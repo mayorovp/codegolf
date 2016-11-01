@@ -1,4 +1,6 @@
 var webpack = require("webpack");
+var path = require("path");
+
 var compile = opt => new Promise((resolve, reject) => webpack(opt, (err, stats) => {
     if (err) {
         console.error(err);
@@ -38,6 +40,9 @@ var options = {
         loaders: [
           {
               test: /\.js$/,
+              include: [
+                  path.resolve(__dirname, "src"),
+              ],
               loader: 'babel',
               query: {
                   presets: ['es2015'],
