@@ -79,7 +79,7 @@
 	});
 
 	vm.snippetText = ko.pureComputed(function () {
-	    return __webpack_require__(4).split("{{QUESTION_ID}}").join(vm.question_number() || "{{QUESTION_ID}}").split("{{SITE_ID}}").join(vm.site_id());
+	    return __webpack_require__(4).split("{{QUESTION_ID}}").join(JSON.stringify(vm.question_number() || "{{QUESTION_ID}}")).split("{{SITE_ID}}").join(JSON.stringify(vm.site_id()));
 	});
 
 	var resultFrame = ko.observable();
