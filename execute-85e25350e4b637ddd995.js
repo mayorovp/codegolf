@@ -6020,7 +6020,7 @@
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<!-- begin snippet: js hide: true console: true babel: false -->\n\n<!-- language: lang-html -->\n\n    <script src=\"" + __webpack_require__(5).table.publicPath + "\"></script>\n    " + __webpack_require__(6).split("\n").join("    \n") + "\n\n<!-- language: lang-css -->\n\n    " + __webpack_require__(7).toString().split("\n").join("    \n") + "\n\n<!-- language: lang-js -->\n\n    execute({{QUESTION_ID}});\n\n<!-- end snippet -->\n";
+	module.exports = "<!-- begin snippet: js hide: true console: true babel: false -->\n\n<!-- language: lang-html -->\n\n    <script src=\"" + __webpack_require__(5).table.publicPath + "\"></script>\n    " + __webpack_require__(6).split("\n").join("    \n") + "\n\n<!-- language: lang-css -->\n\n    " + __webpack_require__(7).toString().split("\n").join("    \n") + "\n\n<!-- language: lang-js -->\n\n    execute({{SITE_ID}}, {{QUESTION_ID}});\n\n<!-- end snippet -->\n";
 
 /***/ },
 /* 5 */
