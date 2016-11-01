@@ -6,13 +6,17 @@ $ErrorActionPreference = "Stop"
 
 git fetch origin gh-pages-release
 
-if (-not (Test-Path package)) {
+if (-not (Test-Path package\.git)) {
+    Remove-Item package -Recurse -Force 
     git worktree add package origin/gh-pages-release
+}
+if (-not (Test-Path package\.git)) {
+    throw "Не могу продолжить работу без отдельного worktree в папке package";
 }
 
 Push-Location package
 [environment]::CurrentDirectory = (Get-Location)
-Remove-Item * -Recurse
+Remove-Item * -Recurse -Exclude .git
 git checkout --force origin/gh-pages-release -B gh-pages
 git rm execute-* -f
 
