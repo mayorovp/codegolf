@@ -32,8 +32,8 @@ vm.urlChanged.subscribe(e => {
 
 vm.snippetText = ko.pureComputed(() =>
     require("html?interpolate!./snippet-template.html")
-    .split("{{QUESTION_ID}}").join(vm.question_number() || "{{QUESTION_ID}}")
-    .split("{{SITE_ID}}").join(vm.site_id())
+    .split("{{QUESTION_ID}}").join(JSON.stringify(vm.question_number() || "{{QUESTION_ID}}"))
+    .split("{{SITE_ID}}").join(JSON.stringify(vm.site_id()))
 );
 
 var resultFrame = ko.observable();
