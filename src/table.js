@@ -15,37 +15,41 @@ function getAnswers(siteId, questionId, answer_filter, page) {
 }
 
 function process(items) {
-    return items.map(function (item) {
-        var matched = item.body.match(/<(h[12])>.*<\/\1>/);
-
-        if (matched) {
-            matched = matched[0].replace(/<s>.*?<\/s>/g, '');
+    return Promise.all(
+        items.map((item) => new Promise((resolve, reject) => {
+            var matched = item.body.match(/<(h[12])>.*<\/\1>/);
 
             if (matched) {
-                matched = matched.match(/<h[12]>\s*?([^<,]+),\s*?(\d+)/);
+                matched = matched[0].replace(/<s>.*?<\/s>/g, '');
 
-                return {
-                    lang: matched[1],
-                    length: +matched[2],
-                    score: item.score,
-                    link: item.share_link,
-                    author: item.owner.display_name,
-                    profile_link: item.owner.link,
-                    profile_image: item.owner.profile_image
+                if (matched) {
+                    matched = matched.match(/<h[12]>\s*?([^<,]+),\s*?(\d+)/);
+
+                    return resolve({
+                        lang: matched[1],
+                        length: +matched[2],
+                        score: item.score,
+                        link: item.share_link,
+                        author: item.owner.display_name,
+                        profile_link: item.owner.link,
+                        profile_image: item.owner.profile_image
+                    });
                 }
             }
-        }
-
-        return {
-            lang: "N/A",
-            length: "N/A",
-            score: "N/A",
-            link: item.share_link,
-            author: item.owner.display_name,
-            profile_link: '#',
-            profile_image: 'https://www.gravatar.com/avatar/119ce21acf0f7a4855915d88b21120f5?s=48&d=identicon&r=PG'
-        }
-    });
+            reject('wrong header format')
+        }).catch(reason => {
+            console.log('Error parse answer:', reason);
+            return {
+                lang: "N/A",
+                length: "N/A",
+                score: "N/A",
+                link: item.share_link,
+                author: item.owner.display_name,
+                profile_link: '#',
+                profile_image: 'https://www.gravatar.com/avatar/119ce21acf0f7a4855915d88b21120f5?s=48&d=identicon&r=PG'
+            };
+        }))
+    );
 }
 
 function fillTemplate(sortedItems) {
@@ -73,7 +77,7 @@ function execute(SITE_ID, QUESTION_ID) {
         .then(r => r.sort((a, b) => typeof a.length !== 'number' ? 1 : a.length - b.length))
         .then(fillTemplate);
 
-    q.catch(err => console.error('Error:',err));
+    q.catch(err => console.error('Error:', err));
     return q;
 }
 
